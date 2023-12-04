@@ -1,10 +1,21 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Login from './components/Login.jsx'
+import Home from './components/Home.jsx'
+import Notfound from './components/404.jsx'
+import Layout from './components/Layout.jsx'
+
 function App() {
   return (
     <>
-      <div className="h-screen w-full flex justify-center items-center flex-col">
-        <h1 className='text-4xl'>Café Campus</h1>
-        <p>ici ça tchatche</p>
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<Notfound />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
