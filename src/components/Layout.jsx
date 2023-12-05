@@ -1,4 +1,5 @@
 import { Outlet, Link } from 'react-router-dom'
+import cafe from '../assets/cafe.png'
 
 const Layout = () => {
   return (
@@ -8,8 +9,8 @@ const Layout = () => {
           <nav className="h-full w-full flex justify-center text-white">
             <ul className="w-full p-10 bg-black right-0 flex items-center space-x-5 text-md">
               <div className="w-[20%] flex space-x-5">
-                <img src="" alt="logo" />
-                <h1 className="text-white">Café campus</h1>
+                <img srcSet={cafe} className="w-6 h-6" alt="logo" />
+                <h1 className="text-white">Café Campus</h1>
               </div>
               <li className="w-[60%] space-x-5 text-md flex justify-center items-center">
                 <Link to="/">Home</Link>
