@@ -37,7 +37,6 @@ export const submitLogin = (user, setMessage, navigate) => {
     .signInWithEmailAndPassword(mail, password)
     .then(({ user }) => {
       if (user) {
-        console.log(user)
         navigate('/profile')
       }
     })
