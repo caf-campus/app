@@ -25,8 +25,7 @@ const ArticleCreation = () => {
   }
 
   useEffect(() => {
-    const response = sessionStorage.getItem('user')
-    if (!response) {
+    if (!auth.currentUser) {
       navigate('/login')
       return
     }
