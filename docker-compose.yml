@@ -1,13 +1,15 @@
-version: '2'
+version: '3.8'
+
 services:
-  node:
-    image: 'node:21.3'
-    user: 'node'
-    working_dir: /home/node/app
-    environment:
-      - NODE_ENV=production
+  app:
+    build:
+      context: '.'
+      dockerfile: Dockerfile
+    ports:
+      - '5173:5173'
     volumes:
-      - ./:/home/node/app
-    expose:
-      - '5173'
-    command: 'npm start'
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run dev
