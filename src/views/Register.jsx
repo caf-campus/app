@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { submitRegister } from '../core'
 import { auth } from '../firebase'
+import { CreateNewUser } from '../core'
 
 const Register = () => {
   const [message, setMessage] = useState('')
@@ -12,13 +12,25 @@ const Register = () => {
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
-  useEffect(() => {
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        navigate('/profile')
+  const submitRegister = async () => {
+    try {
+      const { user } = await auth.createUserWithEmailAndPassword(mail, password)
+      const userData = {
+        firstname: firstName,
+        lastname: lastName,
+        pseudo: pseudonyme,
+        email: mail,
+        articles: [],
       }
-    })
-  })
+      await CreateNewUser(`users/${user.uid}`, userData)
+      navigate('/profile')
+      window.location.reload()
+    } catch (error) {
+      setMessage(error)
+      console.error(error)
+    }
+  }
+
   return (
     <div className="h-screen w-full flex flex-col text-black space-y-10 justify-center items-center bgcolor">
       <h1 className="w-fit text-5xl font-Rollicker">Welcome !</h1>
@@ -27,11 +39,7 @@ const Register = () => {
           className="flex flex-col space-y-5"
           onSubmit={e => {
             e.preventDefault()
-            submitRegister(
-              { mail, password, firstName, lastName, pseudonyme },
-              navigate,
-              setMessage,
-            )
+            submitRegister()
           }}
         >
           <div className="flex flex-col space-y-2">
