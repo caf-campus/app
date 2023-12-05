@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { submitLogin } from '../core'
+import { auth } from '../firebase'
 
 const Login = () => {
   const [message, setMessage] = useState('')
@@ -9,8 +10,7 @@ const Login = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const response = sessionStorage.getItem('user')
-    if (response) {
+    if (auth.currentUser) {
       navigate('/profile')
       return
     }
