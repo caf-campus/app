@@ -1,20 +1,33 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { submitRegister } from '../core'
+import { submitRegister, CreateNewUser } from '../core'
 import { auth } from '../firebase'
 
 const Register = () => {
-  const [message, setMessage] = useState('')
+  const [message] = useState('')
   const [mail, setMail] = useState('')
+  const [pseudonyme, setPseudonyme] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (auth.currentUser) {
+  const submitRegister = async () => {
+    try {
+      const { user } = await auth.createUserWithEmailAndPassword(mail, password)
+      const userData = {
+        firstname: firstName,
+        lastname: lastName,
+        pseudo: pseudonyme,
+        email: mail,
+        articles: [],
+      }
+      await CreateNewUser(`users/${user.uid}`, userData)
       navigate('/profile')
-      return
+    } catch (error) {
+      console.error(error)
     }
-  }, [navigate])
+  }
 
   return (
     <div className="h-screen w-full flex flex-col text-black space-y-10 justify-center items-center bgcolor">
@@ -24,19 +37,55 @@ const Register = () => {
           className="flex flex-col space-y-5"
           onSubmit={e => {
             e.preventDefault()
-            submitRegister({ mail, password }, setMessage, navigate)
+            submitRegister()
           }}
         >
           <div className="flex flex-col space-y-2">
             <label className="font-Inter font-semibold" htmlFor="">
-              E-Mail adress or username
+              LastName
+            </label>
+            <input
+              value={lastName}
+              onChange={e => setLastName(e.target.value)}
+              placeholder="LastName"
+              className="px-4 py-1 font-Inter text-gray-500 rounded-full bgbox h-10 border border-gray-500"
+              type="text"
+            />
+          </div>
+          <div className="flex flex-col space-y-2">
+            <label className="font-Inter font-semibold" htmlFor="">
+              FirstName
+            </label>
+            <input
+              value={firstName}
+              onChange={e => setFirstName(e.target.value)}
+              placeholder="FirstName"
+              className="px-4 py-1 font-Inter text-gray-500 rounded-full bgbox h-10 border border-gray-500"
+              type="text"
+            />
+          </div>
+          <div className="flex flex-col space-y-2">
+            <label className="font-Inter font-semibold" htmlFor="">
+              Pseudonyme
+            </label>
+            <input
+              value={pseudonyme}
+              onChange={e => setPseudonyme(e.target.value)}
+              placeholder="Pseudonyme"
+              className="px-4 py-1 font-Inter text-gray-500 rounded-full bgbox h-10 border border-gray-500"
+              type="text"
+            />
+          </div>
+          <div className="flex flex-col space-y-2">
+            <label className="font-Inter font-semibold" htmlFor="">
+              E-mail
             </label>
             <input
               value={mail}
               onChange={e => setMail(e.target.value)}
-              placeholder="E-Mail adress or username"
+              placeholder="E-mail"
               className="px-4 py-1 font-Inter text-gray-500 rounded-full bgbox h-10 border border-gray-500"
-              type="mail"
+              type="email"
             />
           </div>
           <div className="flex flex-col space-y-2">
