@@ -104,7 +104,8 @@ export const pushData = (path, data) => {
   return push(ref(db, path), data)
 }
 
-export const createArticle = data => {
+export const createArticle = (data, navigate) => {
+  navigate('/')
   return pushData(`articles/`, data)
 }
 
