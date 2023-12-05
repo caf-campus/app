@@ -14,11 +14,9 @@ const ArticleCreation = () => {
       titre: titre,
       description: description,
       date:
-        new Date().getDate() +
-        '/' +
-        new Date().getMonth() +
-        '/' +
-        new Date().getFullYear(),
+        new Date().toLocaleDateString('fr-FR') +
+        ' ' +
+        new Date().toLocaleTimeString(),
       auteur: auth.currentUser.uid,
     }
     createArticle(article, navigate)
