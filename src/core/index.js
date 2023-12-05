@@ -1,30 +1,35 @@
-const API = 'http://firebase....'
+import { auth } from '../firebase'
 
 export const submitLogin = (user, setMessage, navigate) => {
   const { mail, password } = user
-  fetch(`${API}/api/login`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email: mail, password }),
-  })
+  auth
+    .signInWithEmailAndPassword(mail, password)
+    .then(({ user }) => {
+      if (user) {
+        sessionStorage.setItem('user', JSON.stringify(user))
+        navigate('/profile')
+        window.location.reload()
+      }
+    })
     .catch(err => {
-      if (err instanceof TypeError)
-        setMessage(`API offline: login not supported`)
-      else setMessage(err.toString())
+      setMessage(err.message)
       return
     })
-    .then(reponse => {
-      if (!reponse) return
-      reponse.json().then(response => {
-        const { message, data } = response
-        setMessage(message)
-        if (data) {
-          sessionStorage.setItem('user', JSON.stringify(response))
-          navigate('/profile')
-          window.location.reload()
-        }
-      })
+}
+export const submitRegister = (user, setMessage, navigate) => {
+  const { mail, password } = user
+  auth
+    .createUserWithEmailAndPassword(mail, password)
+    .then(({ user }) => {
+      if (user) {
+        sessionStorage.setItem('user', JSON.stringify(user))
+        navigate('/profile')
+        window.location.reload()
+      }
+    })
+    .catch(err => {
+      console.log(err.message)
+      setMessage(err.message)
+      return
     })
 }
