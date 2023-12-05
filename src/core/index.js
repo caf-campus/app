@@ -51,18 +51,9 @@ export const UpdateData = async (path, data) => {
   return update(reference, data)
 }
 
-export const pushData = (path, data) => {
-  return push(ref(db, path), data)
-}
-
 export const deleteData = path => {
   const reference = ref(db, path)
   return remove(reference)
-}
-
-export const createArticle = (data, navigate) => {
-  navigate('/')
-  return pushData(`articles/`, data)
 }
 
 export const createComment = data => {
@@ -107,4 +98,13 @@ export const deleteArticle = async articleID => {
     console.log(error.message)
     throw error
   }
+}
+
+export const pushData = (path, data) => {
+  return push(ref(db, path), data)
+}
+
+export const createArticle = data => {
+  const articleRef = pushData(`articles/`, data)
+  return articleRef
 }
