@@ -1,22 +1,21 @@
 import { useState, useEffect } from 'react'
 import { createComment } from '../core'
 import { useNavigate } from 'react-router-dom'
+import { auth } from '../firebase'
 
 const Comment = () => {
   const navigate = useNavigate()
   const [comment, setComment] = useState('')
 
   const newComment = message => {
-    const user = JSON.parse(sessionStorage.getItem('user'))
     createComment({
-      author: user.email,
+      author: auth.currentUser.email,
       message,
     })
   }
 
   useEffect(() => {
-    const response = sessionStorage.getItem('user')
-    if (!response) {
+    if (!auth.currentUser) {
       navigate('/login')
       return
     }
