@@ -119,3 +119,12 @@ export const deleteUser = async userID => {
     throw error
   }
 }
+
+export const pushData = (path, data) => {
+  return push(ref(db, path), data)
+}
+
+export const createArticle = data => {
+  const articleRef = pushData(`articles/`, data)
+  return articleRef
+}
