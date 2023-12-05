@@ -21,7 +21,7 @@ const ArticleCreation = () => {
         new Date().getFullYear(),
       auteur: auth.currentUser.uid,
     }
-    createArticle(article)
+    createArticle(article, navigate)
   }
 
   useEffect(() => {
