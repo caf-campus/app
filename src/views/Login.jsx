@@ -10,10 +10,11 @@ const Login = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (auth.currentUser) {
-      navigate('/profile')
-      return
-    }
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        navigate('/')
+      }
+    })
   }, [navigate])
 
   return (
@@ -29,12 +30,12 @@ const Login = () => {
         >
           <div className="flex flex-col space-y-2">
             <label className="font-Inter font-semibold" htmlFor="">
-              E-Mail adress or username
+              E-Mail adress
             </label>
             <input
               value={mail}
               onChange={e => setMail(e.target.value)}
-              placeholder="E-Mail adress or username"
+              placeholder="E-Mail adress"
               className="px-4 py-1 font-Inter text-gray-500 rounded-full bgbox h-10 border border-gray-500"
               type="mail"
             />
