@@ -5,6 +5,7 @@ import Notfound from './views/404.jsx'
 import Layout from './components/Layout.jsx'
 import Register from './views/Register.jsx'
 import ArticleCreation from './components/ArticleCreation.jsx'
+import AdminPanel from './components/paneladmin/AdminPanel.jsx'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/articlecreation" element={<ArticleCreation />} />
+            <Route path="/paneladmin" element={<AdminPanel />} />
             <Route path="*" element={<Notfound />} />
           </Route>
         </Routes>
