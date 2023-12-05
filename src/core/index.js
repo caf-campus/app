@@ -37,6 +37,7 @@ export const submitLogin = (user, setMessage, navigate) => {
     .signInWithEmailAndPassword(mail, password)
     .then(({ user }) => {
       if (user) {
+        console.log(user)
         navigate('/profile')
       }
     })
@@ -54,10 +55,6 @@ export const UpdateData = async (path, data) => {
 export const deleteData = path => {
   const reference = ref(db, path)
   return remove(reference)
-}
-
-export const createComment = data => {
-  return pushData(`commentary/`, data)
 }
 
 export const getUserByID = async userID => {
