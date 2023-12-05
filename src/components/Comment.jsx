@@ -1,24 +1,34 @@
-import { db } from '../firebase'
-import { useState } from 'react'
-import { push, ref } from 'firebase/database'
+import { useState, useEffect } from 'react'
+import { createComment } from '../core'
+import { useNavigate } from 'react-router-dom'
 
 const Comment = () => {
+  const navigate = useNavigate()
   const [comment, setComment] = useState('')
 
   const newComment = message => {
-    const comment = {
-      auteur: 'toto',
+    const user = JSON.parse(sessionStorage.getItem('user'))
+    createComment({
+      author: user.email,
       message,
-    }
-    push(ref(db, 'commentary/'), comment)
+    })
   }
+
+  useEffect(() => {
+    const response = sessionStorage.getItem('user')
+    if (!response) {
+      navigate('/login')
+      return
+    }
+  }, [navigate])
+
   return (
     <>
       <form
         className="flex flex-col space-y-5"
         onSubmit={e => {
           e.preventDefault()
-          newComment({ comment })
+          newComment(comment)
         }}
       >
         <div className="flex flex-col border border-black p-2 rounded-xl">
