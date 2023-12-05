@@ -1,4 +1,5 @@
-import { auth } from '../firebase'
+import { auth, db } from '../firebase'
+import { ref, push } from 'firebase/database'
 
 export const submitLogin = (user, setMessage, navigate) => {
   const { mail, password } = user
@@ -32,4 +33,13 @@ export const submitRegister = (user, setMessage, navigate) => {
       setMessage(err.message)
       return
     })
+}
+
+export const pushData = (path, data) => {
+  return push(ref(db, path), data)
+}
+
+export const createArticle = data => {
+  const articleRef = pushData(`articles/`, data)
+  return articleRef
 }

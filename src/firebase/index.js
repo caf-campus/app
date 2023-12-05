@@ -13,6 +13,7 @@ const firebaseConfig = {
   storageBucket: Credentials.storageBucket,
   messagingSenderId: Credentials.messagingSenderId,
   appId: Credentials.appId,
+  databaseURL: Credentials.databaseUrl,
 }
 
 //init firebase app
