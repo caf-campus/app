@@ -40,6 +40,9 @@ export const pushData = (path, data) => {
 }
 
 export const createArticle = data => {
-  const articleRef = pushData(`articles/`, data)
-  return articleRef
+  return pushData(`articles/`, data)
+}
+
+export const createComment = data => {
+  return pushData(`commentary/`, data)
 }
