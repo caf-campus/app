@@ -4,7 +4,7 @@ import { auth } from '../firebase'
 import { CreateNewUser } from '../core'
 
 const Register = () => {
-  const [message] = useState('')
+  const [message, setMessage] = useState('')
   const [mail, setMail] = useState('')
   const [pseudonyme, setPseudonyme] = useState('')
   const [firstName, setFirstName] = useState('')
@@ -26,6 +26,7 @@ const Register = () => {
       await CreateNewUser(`users/${user.uid}`, userData)
       navigate('/profile')
     } catch (error) {
+      setMessage(error)
       console.error(error)
     }
   }

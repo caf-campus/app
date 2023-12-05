@@ -37,6 +37,7 @@ export const submitLogin = (user, setMessage, navigate) => {
     .signInWithEmailAndPassword(mail, password)
     .then(({ user }) => {
       if (user) {
+        console.log(user)
         navigate('/profile')
       }
     })
@@ -118,16 +119,4 @@ export const deleteUser = async userID => {
     console.log(error.message)
     throw error
   }
-}
-
-export const pushData = (path, data) => {
-  return push(ref(db, path), data)
-}
-
-export const createArticle = data => {
-  return pushData(`articles/`, data)
-}
-
-export const createComment = data => {
-  return pushData(`commentary/`, data)
 }
