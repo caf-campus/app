@@ -43,4 +43,7 @@ export const createArticle = (data, navigate) => {
   const articleRef = pushData(`articles/`, data)
   navigate('/profile')
   return articleRef
+
+export const createComment = data => {
+  return pushData(`commentary/`, data)
 }
