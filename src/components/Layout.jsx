@@ -1,7 +1,26 @@
 import { Outlet, Link } from 'react-router-dom'
 import cafe from '../assets/cafe.png'
+import { auth } from '../firebase'
+import { useState, useEffect } from 'react'
+import { ReadData, handleLogOut } from '../core'
+import { useNavigate } from 'react-router-dom'
 
 const Layout = () => {
+  const [user, setUser] = useState('')
+  const [userDataState, setUserData] = useState('')
+  const navigate = useNavigate()
+  const fetchUserData = async () => {
+    const userData = await ReadData(`users/${user.uid}`)
+    setUserData(userData)
+  }
+  useEffect(() => {
+    auth.onAuthStateChanged(user => {
+      setUser(user)
+    })
+  }, [])
+
+  fetchUserData()
+
   return (
     <>
       <div className="h-screen w-full flex flex-col justify-between items-center">
@@ -18,8 +37,16 @@ const Layout = () => {
                 <Link to="/paneladmin">Admin Panel</Link>
               </li>
               <div className="w-[20%] flex justify-end space-x-5">
-                <h1 className="text-white">User</h1>
-                <img src="" alt="user image" />
+                {user ? (
+                  <>
+                    <Link to="/profile">{userDataState.pseudo}</Link>
+                    <button onClick={handleLogOut(navigate)}>Disconnect</button>
+                  </>
+                ) : (
+                  <Link to="/login">Login</Link>
+                )}
+
+                {/* <img src="" alt="user image" /> */}
               </div>
             </ul>
           </nav>
