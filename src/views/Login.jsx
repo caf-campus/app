@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { submitLogin } from '../core'
 import { auth } from '../firebase'
@@ -8,14 +8,20 @@ const Login = () => {
   const [mail, setMail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
-
+  // useEffect(() => {
+  //   auth.onAuthStateChanged(user => {
+  //     if (user) {
+  //       navigate('/')
+  //     }
+  //   })
+  // }, [])
   useEffect(() => {
     auth.onAuthStateChanged(user => {
       if (user) {
         navigate('/')
       }
     })
-  }, [navigate])
+  })
 
   return (
     <div className="h-screen w-full flex flex-col text-black space-y-10 justify-center items-center bgcolor">
