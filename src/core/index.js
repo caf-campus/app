@@ -1,5 +1,5 @@
 import { auth, db } from '../firebase'
-import { ref, set, get } from 'firebase/database'
+import { ref, set, get, push } from 'firebase/database'
 
 export const CreateNewUser = (path, data) => {
   const reference = ref(db, path)
@@ -29,7 +29,6 @@ export const handleLogOut = navigate => {
     .signOut()
     .then(() => {
       navigate('/login')
-      window.location.reload()
     })
     .catch(err => {
       console.log(err)
@@ -42,6 +41,7 @@ export const submitLogin = (user, setMessage, navigate) => {
     .signInWithEmailAndPassword(mail, password)
     .then(({ user }) => {
       if (user) {
+        console.log(user)
         navigate('/profile')
         window.location.reload()
       }

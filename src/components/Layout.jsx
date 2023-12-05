@@ -1,25 +1,30 @@
+import { useEffect, useState } from 'react'
 import { Outlet, Link } from 'react-router-dom'
 import cafe from '../assets/cafe.png'
 import { auth } from '../firebase'
-import { useState, useEffect } from 'react'
 import { ReadData, handleLogOut } from '../core'
-import { useNavigate } from 'react-router-dom'
 
 const Layout = () => {
-  const [user, setUser] = useState('')
   const [userDataState, setUserData] = useState('')
-  const navigate = useNavigate()
+
   const fetchUserData = async () => {
-    const userData = await ReadData(`users/${user.uid}`)
-    setUserData(userData)
+    const userData = await ReadData(`users/${auth.currentUser.uid}`)
+    if (userData) {
+      setUserData(userData)
+    }
   }
+
+  // useEffect(() => {
+  //   fetchUserData()
+  // })
+
   useEffect(() => {
     auth.onAuthStateChanged(user => {
-      setUser(user)
+      if (user) {
+        fetchUserData()
+      }
     })
-  }, [])
-
-  fetchUserData()
+  })
 
   return (
     <>
@@ -33,14 +38,13 @@ const Layout = () => {
               </div>
               <li className="w-[60%] space-x-5 text-md flex justify-center items-center">
                 <Link to="/">Home</Link>
-                <Link to="/login">Login</Link>
                 <Link to="/paneladmin">Admin Panel</Link>
               </li>
               <div className="w-[20%] flex justify-end space-x-5">
-                {user ? (
+                {userDataState ? (
                   <>
                     <Link to="/profile">{userDataState.pseudo}</Link>
-                    <button onClick={handleLogOut(navigate)}>Disconnect</button>
+                    <button onClick={handleLogOut()}>Disconnect</button>
                   </>
                 ) : (
                   <Link to="/login">Login</Link>
