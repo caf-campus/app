@@ -3,7 +3,7 @@ import { Outlet, Link } from 'react-router-dom'
 const Layout = () => {
   return (
     <>
-      <div className="h-screen w-full flex flex-col justify-center items-center">
+      <div className="h-screen w-full flex flex-col justify-between items-center">
         <header className="sticky top-0 z-10 w-full h-28">
           <nav className="h-full w-full flex justify-center text-white">
             <ul className="w-full p-10 bg-black right-0 flex items-center space-x-5 text-md">
@@ -14,6 +14,7 @@ const Layout = () => {
               <li className="w-[60%] space-x-5 text-md flex justify-center items-center">
                 <Link to="/">Home</Link>
                 <Link to="/login">Login</Link>
+                <Link to="/paneladmin">Admin Panel</Link>
               </li>
               <div className="w-[20%] flex justify-end space-x-5">
                 <h1 className="text-white">User</h1>
