@@ -14,10 +14,6 @@ const Layout = () => {
     }
   }
 
-  // useEffect(() => {
-  //   fetchUserData()
-  // })
-
   useEffect(() => {
     auth.onAuthStateChanged(user => {
       if (user) {

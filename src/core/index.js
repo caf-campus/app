@@ -3,14 +3,10 @@ import { ref, set, get, push } from 'firebase/database'
 
 export const CreateNewUser = (path, data) => {
   const reference = ref(db, path)
-  console.log(path)
   return set(reference, data)
 }
 
 export const ReadData = async path => {
-  // await ref(db, path).onValue("value", (snapshot) => {
-  //   return snapshot.val();
-  // });
   return get(ref(db, path))
     .then(snapshot => {
       if (snapshot.exists()) {
@@ -41,7 +37,6 @@ export const submitLogin = (user, setMessage, navigate) => {
     .signInWithEmailAndPassword(mail, password)
     .then(({ user }) => {
       if (user) {
-        console.log(user)
         navigate('/profile')
         window.location.reload()
       }
@@ -51,23 +46,24 @@ export const submitLogin = (user, setMessage, navigate) => {
       return
     })
 }
-export const submitRegister = async (user, navigate) => {
+export const submitRegister = async (
+  { mail, password, firstName, lastName, pseudonyme },
+  navigate,
+  setMessage,
+) => {
   try {
-    const { mail, password, firstName, lastName, pseudonyme } = user
-    const { userAuth } = await auth.createUserWithEmailAndPassword(
-      mail,
-      password,
-    )
+    const { user } = await auth.createUserWithEmailAndPassword(mail, password)
     const userData = {
       firstname: firstName,
       lastname: lastName,
       pseudo: pseudonyme,
       email: mail,
+      articles: [],
     }
-    console.log(userAuth)
-    await CreateNewUser(`users/${userAuth.uid}`, userData)
-    navigate('/')
+    await CreateNewUser(`users/${user.uid}`, userData)
+    navigate('/profile')
   } catch (error) {
+    setMessage(error)
     console.error(error)
   }
 }

@@ -6,7 +6,7 @@ import Layout from './components/Layout.jsx'
 import Register from './views/Register.jsx'
 import ArticleCreation from './components/ArticleCreation.jsx'
 import AdminPanel from './components/paneladmin/AdminPanel.jsx'
-import Profile from './components/Profile.jsx'
+import Profile from './views/Profile.jsx'
 
 function App() {
   return (

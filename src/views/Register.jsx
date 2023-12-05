@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { submitRegister, CreateNewUser } from '../core'
+import { submitRegister } from '../core'
 import { auth } from '../firebase'
 
 const Register = () => {
@@ -12,24 +12,13 @@ const Register = () => {
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
-  const submitRegister = async () => {
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(mail, password)
-      const userData = {
-        firstname: firstName,
-        lastname: lastName,
-        pseudo: pseudonyme,
-        email: mail,
-        articles: [],
+  useEffect(() => {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        navigate('/profile')
       }
-      await CreateNewUser(`users/${user.uid}`, userData)
-      navigate('/profile')
-    } catch (error) {
-      setMessage(error)
-      console.error(error)
-    }
-  }
-
+    })
+  })
   return (
     <div className="h-screen w-full flex flex-col text-black space-y-10 justify-center items-center bgcolor">
       <h1 className="w-fit text-5xl font-Rollicker">Welcome !</h1>
@@ -38,7 +27,11 @@ const Register = () => {
           className="flex flex-col space-y-5"
           onSubmit={e => {
             e.preventDefault()
-            submitRegister()
+            submitRegister(
+              { mail, password, firstName, lastName, pseudonyme },
+              navigate,
+              setMessage,
+            )
           }}
         >
           <div className="flex flex-col space-y-2">
