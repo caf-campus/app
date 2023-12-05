@@ -20,11 +20,11 @@ export const ReadData = async path => {
     })
 }
 
-export const handleLogOut = navigate => {
+export const handleLogOut = () => {
   auth
     .signOut()
     .then(() => {
-      navigate('/login')
+      window.location.href = '/'
     })
     .catch(err => {
       console.log(err)

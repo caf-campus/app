@@ -40,7 +40,7 @@ const Layout = () => {
                 {userDataState ? (
                   <>
                     <Link to="/profile">{userDataState.pseudo}</Link>
-                    <button onClick={handleLogOut()}>Disconnect</button>
+                    <button onClick={handleLogOut}>Disconnect</button>
                   </>
                 ) : (
                   <Link to="/login">Login</Link>

@@ -8,9 +8,7 @@ const Login = () => {
   const [mail, setMail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
-
   useEffect(() => {
-    auth.signOut()
     auth.onAuthStateChanged(user => {
       if (user) {
         navigate('/profile')
