@@ -1,22 +1,53 @@
+/* eslint-disable no-useless-catch */
 /* eslint-disable no-undef */
 // Import the functions you need from the SDKs you need
 import firebase from 'firebase/compat/app'
 import { getDatabase } from 'firebase/database'
 import 'firebase/compat/auth' // TODO: Add SDKs for Firebase products that you want to use
+import {
+  SecretsManagerClient,
+  GetSecretValueCommand,
+} from '@aws-sdk/client-secrets-manager'
+
+const secret_name = 'prod/cafe-campus'
+
+const client = new SecretsManagerClient({
+  region: 'eu-west-3',
+})
+
+let response
+
+try {
+  response = await client.send(
+    new GetSecretValueCommand({
+      SecretId: secret_name,
+      VersionStage: 'AWSCURRENT', // VersionStage defaults to AWSCURRENT if unspecified
+    }),
+  )
+} catch (error) {
+  // For a list of exceptions thrown, see
+  // https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
+  throw error
+}
+
+const secret = JSON.parse(response.SecretString)
+
+// Your code goes here
+
 console.log('-----------------')
-console.log(process.env.REACT_APP_FIREBASE_API_KEY)
+console.log(secret.apiKey)
 console.log('-----------------')
-console.log(typeof process.env.REACT_APP_FIREBASE_API_KEY)
+console.log(typeof secret.apiKey)
 console.log('-----------------')
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  apiKey: secret.apiKey,
+  authDomain: secret.authDomain,
+  projectId: secret.projectId,
+  storageBucket: secret.storageBucket,
+  messagingSenderId: secret.messagingSenderId,
+  appId: secret.appId,
+  databaseURL: secret.databaseURL,
 }
 
 //init firebase app
