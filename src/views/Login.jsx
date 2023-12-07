@@ -40,7 +40,9 @@ const Login = () => {
             />
           </div>
           <div className="flex flex-col space-y-2">
-            <label className="font-Inter font-semibold">Password</label>
+            <label className="font-Inter font-semibold dark:text-white">
+              Password
+            </label>
             <input
               value={password}
               onChange={e => setPassword(e.target.value)}
@@ -59,7 +61,7 @@ const Login = () => {
             </button>
           </div>
           <div className="w-full flex justify-center items-center">
-            <span className="textcolor font-Inter text-sm">
+            <span className="textcolor font-Inter text-sm dark:text-white">
               I dont have an account yet.
               <Link
                 className="ml-2 text-neutral-800 font-bold text-center underline cursor-pointer"
