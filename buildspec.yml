@@ -1,0 +1,14 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - npm install
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - npm run build
+  post_build:
+    commands:
+      - aws s3 cp --recursive ./dist s3://cafe-campus/
+      - echo Build completed on `date`
