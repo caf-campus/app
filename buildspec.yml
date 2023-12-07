@@ -12,6 +12,7 @@ phases:
       - export REACT_APP_FIREBASE_MESSAGING_SENDER_ID=$(echo $CREDENTIALS | jq -r .messagingSenderId)
       - export REACT_APP_FIREBASE_APP_ID=$(echo $CREDENTIALS | jq -r .appId)
       - export REACT_APP_FIREBASE_DATABASE_URL=$(echo $CREDENTIALS | jq -r .databaseURL)
+      - echo $REACT_APP_FIREBASE_API_KEY
   build:
     commands:
       - echo Build started on `date`
@@ -19,5 +20,7 @@ phases:
       - npm run build
   post_build:
     commands:
-      - aws s3 cp --recursive ./dist s3://cafe-campus/
       - echo Build completed on `date`
+  artifact:
+    files:
+      - ./dist
