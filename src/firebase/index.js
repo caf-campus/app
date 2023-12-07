@@ -1,22 +1,58 @@
-/* eslint-disable no-undef */
 // Import the functions you need from the SDKs you need
 import firebase from 'firebase/compat/app'
 import { getDatabase } from 'firebase/database'
 import 'firebase/compat/auth' // TODO: Add SDKs for Firebase products that you want to use
 
-const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+import {
+  SecretsManagerClient,
+  GetSecretValueCommand,
+} from '@aws-sdk/client-secrets-manager'
+
+const secret_name =
+  'arn:aws:secretsmanager:eu-west-3:542935783289:secret:prod/cafe-campus-QvSFJM'
+
+const client = new SecretsManagerClient({
+  credentials: {
+    accessKeyId: 'AKIAX42L6S54XPUSTE5C',
+    secretAccessKey: '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',
+  },
+  region: 'eu-west-3',
+})
+
+let auth
+let db
+
+const fetchData = async () => {
+  try {
+    const response = await client.send(
+      new GetSecretValueCommand({
+        SecretId: secret_name,
+        VersionStage: 'AWSCURRENT',
+      }),
+    )
+    const secret = JSON.parse(response.SecretString)
+
+    const firebaseConfig = {
+      apiKey: secret.apiKey,
+      authDomain: secret.authDomain,
+      projectId: secret.projectId,
+      storageBucket: secret.storageBucket,
+      messagingSenderId: secret.messagingSenderId,
+      appId: secret.appId,
+      databaseURL: secret.databaseURL,
+    }
+
+    // Initialize Firebase app
+    const app = firebase.initializeApp(firebaseConfig)
+
+    auth = firebase.auth()
+    db = getDatabase(app)
+    // Export necessary Firebase objects
+  } catch (err) {
+    console.error(err)
+  }
 }
 
-//init firebase app
-const app = firebase.initializeApp(firebaseConfig)
+fetchData()
 
-const auth = firebase.auth()
-const db = getDatabase(app)
 export { auth, db }
