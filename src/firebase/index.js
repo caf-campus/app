@@ -1,7 +1,7 @@
-/* eslint-disable no-undef */
 // Import the functions you need from the SDKs you need
 import firebase from 'firebase/compat/app'
 import { getDatabase } from 'firebase/database'
+import Credentials from '../../credentials'
 import 'firebase/compat/auth' // TODO: Add SDKs for Firebase products that you want to use
 
 import {
@@ -54,6 +54,23 @@ const fetchData = async () => {
   }
 }
 
-fetchData()
+const isProduction = import.meta.env.MODE == 'production' ? true : false
+if (isProduction) {
+  fetchData()
+} else {
+  const firebaseConfig = {
+    apiKey: Credentials.apiKey,
+    authDomain: Credentials.authDomain,
+    projectId: Credentials.projectId,
+    storageBucket: Credentials.storageBucket,
+    messagingSenderId: Credentials.messagingSenderId,
+    appId: Credentials.appId,
+    databaseURL: Credentials.databaseURL,
+  }
+  // Initialize Firebase app
+  const app = firebase.initializeApp(firebaseConfig)
+  auth = firebase.auth()
+  db = getDatabase(app)
+}
 
 export { auth, db }

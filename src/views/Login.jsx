@@ -8,9 +8,7 @@ const Login = () => {
   const [mail, setMail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
-
   useEffect(() => {
-    auth.signOut()
     auth.onAuthStateChanged(user => {
       if (user) {
         navigate('/profile')
@@ -51,9 +49,6 @@ const Login = () => {
               type="password"
             />
           </div>
-          <span className="textcolor font-Inter text-sm underline cursor-pointer">
-            Forgot password ?
-          </span>
           <p className="w-full text-center">{message}</p>
           <div className="w-full flex justify-center items-center">
             <button

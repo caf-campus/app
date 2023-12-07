@@ -1,5 +1,5 @@
 import { auth, db } from '../firebase'
-import { ref, set, get, push } from 'firebase/database'
+import { ref, set, get, push, update } from 'firebase/database'
 
 export const CreateNewUser = (path, data) => {
   const reference = ref(db, path)
@@ -20,11 +20,11 @@ export const ReadData = async path => {
     })
 }
 
-export const handleLogOut = navigate => {
+export const handleLogOut = () => {
   auth
     .signOut()
     .then(() => {
-      navigate('/login')
+      window.location.href = '/'
     })
     .catch(err => {
       console.log(err)
@@ -38,7 +38,6 @@ export const submitLogin = (user, setMessage, navigate) => {
     .then(({ user }) => {
       if (user) {
         navigate('/profile')
-        window.location.reload()
       }
     })
     .catch(err => {
@@ -46,26 +45,10 @@ export const submitLogin = (user, setMessage, navigate) => {
       return
     })
 }
-export const submitRegister = async (
-  { mail, password, firstName, lastName, pseudonyme },
-  navigate,
-  setMessage,
-) => {
-  try {
-    const { user } = await auth.createUserWithEmailAndPassword(mail, password)
-    const userData = {
-      firstname: firstName,
-      lastname: lastName,
-      pseudo: pseudonyme,
-      email: mail,
-      articles: [],
-    }
-    await CreateNewUser(`users/${user.uid}`, userData)
-    navigate('/profile')
-  } catch (error) {
-    setMessage(error)
-    console.error(error)
-  }
+
+export const UpdateData = async (path, data) => {
+  const reference = ref(db, path)
+  return update(reference, data)
 }
 
 export const pushData = (path, data) => {
