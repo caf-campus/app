@@ -13,6 +13,10 @@ const secret_name =
   'arn:aws:secretsmanager:eu-west-3:542935783289:secret:prod/cafe-campus-QvSFJM'
 
 const client = new SecretsManagerClient({
+  credentials: {
+    accessKeyId: 'AKIAX42L6S54XPUSTE5C',
+    secretAccessKey: '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',
+  },
   region: 'eu-west-3',
 })
 
