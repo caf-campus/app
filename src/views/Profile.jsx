@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ReadData, UpdateData, deleteData } from '../core' // Assuming you have an UpdateData function
+import { ReadData, updateData, deleteData } from '../core' // Assuming you have an UpdateData function
 import { auth } from '../firebase'
 import { useNavigate } from 'react-router-dom'
 
@@ -31,7 +31,7 @@ const Profile = () => {
 
   const handleSaveClick = async () => {
     // Update user data in the database
-    await UpdateData(`users/${auth.currentUser.uid}`, userDataState)
+    await updateData(`users/${auth.currentUser.uid}`, userDataState)
     setEditMode(false)
   }
 
