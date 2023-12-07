@@ -1,12 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import TableUsersComponent from './TableUsersComponent'
-import TablePostsComponent from './TablePostsComponent'
-import DashboardComponent from './DashboardComponent'
+import TableArticlesComponent from './TableArticlesComponent'
 
 const AdminPanel = () => {
   // État pour suivre l'onglet actif
-  const [activeTab, setActiveTab] = useState('Table Users')
+  const [activeTab, setActiveTab] = useState('Utilisateurs')
 
   // Fonction pour changer l'onglet actif
   const handleTabClick = tabName => {
@@ -16,12 +15,10 @@ const AdminPanel = () => {
   // Déterminer quel composant afficher
   const renderComponent = () => {
     switch (activeTab) {
-      case 'Table Users':
+      case 'Utilisateurs':
         return <TableUsersComponent />
-      case 'Table Posts':
-        return <TablePostsComponent />
-      case 'Dashboard (test)':
-        return <DashboardComponent />
+      case 'Articles':
+        return <TableArticlesComponent />
       default:
         return null
     }
@@ -32,26 +29,18 @@ const AdminPanel = () => {
       <ul className="menu bg-base-200 w-1/5">
         <li>
           <a
-            className={activeTab === 'Table Users' ? 'active' : ''}
-            onClick={() => handleTabClick('Table Users')}
+            className={activeTab === 'Utilisateurs' ? 'active' : ''}
+            onClick={() => handleTabClick('Utilisateurs')}
           >
-            Table Users
+            Utilisateurs
           </a>
         </li>
         <li>
           <a
-            className={activeTab === 'Table Posts' ? 'active' : ''}
-            onClick={() => handleTabClick('Table Posts')}
+            className={activeTab === 'Articles' ? 'active' : ''}
+            onClick={() => handleTabClick('Articles')}
           >
-            Table Posts
-          </a>
-        </li>
-        <li>
-          <a
-            className={activeTab === 'Dashboard (test)' ? 'active' : ''}
-            onClick={() => handleTabClick('Dashboard (test)')}
-          >
-            Dashboard (test)
+            Articles
           </a>
         </li>
       </ul>

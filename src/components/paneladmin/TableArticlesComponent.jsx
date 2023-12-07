@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { ReadData, getUserByID } from '../core'
+import { ReadData, getUserByID } from '../../core'
 
-const Home = () => {
+const TableArticlesComponent = () => {
   const [articles, setArticles] = useState([])
   const [authors, setAuthors] = useState({})
 
@@ -32,29 +32,36 @@ const Home = () => {
   }, [])
 
   return (
-    <div className="h-screen w-full flex justify-center items-center flex-col p-8">
-      <h1 className="text-4xl">Café Campus</h1>
-      <p>ici ça tchatche</p>
-
-      <div className="mt-8 w-[60%]">
-        {articles.map(article => (
-          <a href={`article?id=${article.id}`} key={article.id}>
-            <div className="bg-white p-6 mb-4 rounded-md shadow-md border border-gray-300">
-              <h2 className="text-2xl font-semibold mb-2">{article.titre}</h2>
-              <p className="text-gray-700">
+    <div className="overflow-x-auto flex-grow pl-6">
+      <p className="font-bold">Articles : {articles.length}</p>
+      <table className="mt-2 table table-xs">
+        <thead>
+          <tr>
+            <th>Titre</th>
+            <th>Auteur</th>
+            <th>Date</th>
+            <th>Id</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {articles.map(article => (
+            <tr key={article.id}>
+              <td>{article.titre}</td>
+              <td>{authors[article.auteur].pseudo}</td>
+              <td>{article.date}</td>
+              <td>{article.id}</td>
+              <td>
                 {article.description.length > 100
                   ? `${article.description.substring(0, 100)}...`
                   : article.description}
-              </p>
-              <p className="text-gray-500 text-sm mt-2">
-                Par {authors[article.auteur].pseudo} - <i>{article.date}</i>
-              </p>
-            </div>
-          </a>
-        ))}
-      </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   )
 }
 
-export default Home
+export default TableArticlesComponent
