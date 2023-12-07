@@ -24,7 +24,9 @@ const Article = () => {
   }
 
   const handleSaveClick = async () => {
-    await updateData(`articles/${article.key}`, article)
+    const urlParams = new URLSearchParams(window.location.search)
+    const id = urlParams.get('id')
+    await updateData(`articles/${id}`, article)
     setEditMode(false)
   }
 
