@@ -25,7 +25,9 @@ const Article = () => {
         <h1 className="text-4xl font-bold mb-4 text-grey-700">
           {article.titre}
         </h1>
-        <p className="text-gray-600 mb-6">{article.description}</p>
+        <p className="text-gray-600 mb-6" style={{ wordWrap: 'break-word' }}>
+          {article.description}
+        </p>
         <div className="prose max-w-none text-gray-800">
           <p>
             <b>Par {author.pseudo}</b> - <i>{article.date}</i>
