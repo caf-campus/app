@@ -141,3 +141,18 @@ export const submitDeleteUser = (user, setMessage, navigate) => {
       return
     })
 }
+
+export const getUserByID = async userID => {
+  try {
+    const userRef = ref(db, `users/${userID}`)
+    const snapshot = await get(userRef)
+    if (snapshot.exists()) {
+      return snapshot.val()
+    } else {
+      throw new Error('User not found')
+    }
+  } catch (error) {
+    console.log(error.message)
+    throw error
+  }
+}
