@@ -52,7 +52,7 @@ const Article = () => {
             article.titre
           )}
         </h1>
-        <p className="text-gray-600 mb-6" style={{ wordWrap: 'break-word' }}>
+        <p className="text-gray-600 mb-6 break-words">
           {isEditMode ? (
             <textarea
               className="border border-gray-400 p-2 rounded-md w-full h-80 dark:bg-white"
