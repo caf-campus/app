@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ReadData, UpdateData } from '../core' // Assuming you have an UpdateData function
+import { ReadData, UpdateData, deleteData } from '../core' // Assuming you have an UpdateData function
 import { auth } from '../firebase'
 import { useNavigate } from 'react-router-dom'
 
@@ -41,6 +41,20 @@ const Profile = () => {
       ...userDataState,
       [e.target.name]: e.target.value,
     })
+  }
+
+  const handleDeleteClick = async () => {
+    const shouldDelete = window.confirm(
+      'Are you sure you want to delete your account?',
+    )
+
+    if (shouldDelete) {
+      deleteData(`users/${auth.currentUser.uid}`)
+      auth.signOut()
+      auth.currentUser.delete().then()
+      navigate('/')
+      window.location.reload()
+    }
   }
 
   return (
@@ -106,6 +120,9 @@ const Profile = () => {
           ) : (
             <button onClick={handleModifyClick}>Modify</button>
           )}
+        </div>
+        <div>
+          <button onClick={handleDeleteClick}>Delete Account</button>
         </div>
       </div>
     </div>

@@ -47,8 +47,6 @@ const Layout = () => {
                 ) : (
                   <Link to="/login">Login</Link>
                 )}
-
-                {/* <img src="" alt="user image" /> */}
               </div>
             </ul>
           </nav>
