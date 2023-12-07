@@ -4,7 +4,7 @@ phases:
     commands:
       - npm install
       - echo Fetching Firebase credentials...
-      - CREDENTIALS=$(aws secretsmanager get-secret-value --secret-id firebase_credentials | jq -r .SecretString)
+      - CREDENTIALS=$(aws secretsmanager get-secret-value --secret-id prod/cafe-campus-QvSFJM)
       - export REACT_APP_FIREBASE_API_KEY=$(echo $CREDENTIALS | jq -r .apiKey)
       - export REACT_APP_FIREBASE_AUTH_DOMAIN=$(echo $CREDENTIALS | jq -r .authDomain)
       - export REACT_APP_FIREBASE_PROJECT_ID=$(echo $CREDENTIALS | jq -r .projectId)
@@ -19,5 +19,5 @@ phases:
       - npm run build
   post_build:
     commands:
-      - aws s3 cp --recursive ./build s3://cafe-campus/
+      - aws s3 cp --recursive ./dist s3://cafe-campus/
       - echo Build completed on `date`
