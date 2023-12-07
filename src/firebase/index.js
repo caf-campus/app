@@ -29,7 +29,7 @@ const data = () => {
       }),
     )
     .then(data => {
-      return JSON.parse(data)
+      return data
     })
 }
 
