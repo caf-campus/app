@@ -20,7 +20,5 @@ phases:
       - npm run build
   post_build:
     commands:
+      - aws s3 cp --recursive ./dist s3://cafe-campus/
       - echo Build completed on `date`
-  artifact:
-    files:
-      - ./dist
