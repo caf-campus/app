@@ -18,7 +18,9 @@ const Login = () => {
 
   return (
     <div className="h-screen w-full flex flex-col text-black space-y-10 justify-center items-center bgcolor">
-      <h1 className="w-fit text-5xl font-Rollicker">Welcome Back !</h1>
+      <h1 className="w-fit text-5xl font-Rollicker dark:text-white">
+        Welcome Back !
+      </h1>
       <div className="flex w-[30%] flex-col space-y-20">
         <form
           className="flex flex-col space-y-5"
@@ -28,19 +30,24 @@ const Login = () => {
           }}
         >
           <div className="flex flex-col space-y-2">
-            <label className="font-Inter font-semibold" htmlFor="">
-              E-Mail adress
+            <label
+              className="font-Inter font-semibold dark:text-white"
+              htmlFor=""
+            >
+              Email adress
             </label>
             <input
               value={mail}
               onChange={e => setMail(e.target.value)}
-              placeholder="E-Mail adress"
+              placeholder="Email adress"
               className="px-4 py-1 font-Inter text-gray-500 rounded-full bgbox h-10 border border-gray-500"
               type="mail"
             />
           </div>
           <div className="flex flex-col space-y-2">
-            <label className="font-Inter font-semibold">Password</label>
+            <label className="font-Inter font-semibold dark:text-white">
+              Password
+            </label>
             <input
               value={password}
               onChange={e => setPassword(e.target.value)}
@@ -59,7 +66,7 @@ const Login = () => {
             </button>
           </div>
           <div className="w-full flex justify-center items-center">
-            <span className="textcolor font-Inter text-sm">
+            <span className="textcolor font-Inter text-sm dark:text-white">
               I dont have an account yet.
               <Link
                 className="ml-2 text-gray-300 font-bold underline cursor-pointer"
