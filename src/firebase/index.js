@@ -1,9 +1,8 @@
-/* eslint-disable no-useless-catch */
-/* eslint-disable no-undef */
 // Import the functions you need from the SDKs you need
 import firebase from 'firebase/compat/app'
 import { getDatabase } from 'firebase/database'
 import 'firebase/compat/auth' // TODO: Add SDKs for Firebase products that you want to use
+
 import {
   SecretsManagerClient,
   GetSecretValueCommand,
