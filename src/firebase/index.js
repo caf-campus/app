@@ -20,45 +20,40 @@ const client = new SecretsManagerClient({
   region: 'eu-west-3',
 })
 
-let firebaseConfig
+let auth
+let db
 
-const data = () => {
-  let tempData = {}
-  return client
-    .send(
+const fetchData = async () => {
+  try {
+    const response = await client.send(
       new GetSecretValueCommand({
         SecretId: secret_name,
-        VersionStage: 'AWSCURRENT', // VersionStage defaults to AWSCURRENT if unspecified
+        VersionStage: 'AWSCURRENT',
       }),
     )
-    .then(data => {
-      tempData = JSON.parse(data.SecretString)
-      return {
-        apiKey: tempData.apiKey,
-        authDomain: tempData.authDomain,
-        projectId: tempData.projectId,
-        storageBucket: tempData.storageBucket,
-        messagingSenderId: tempData.messagingSenderId,
-        appId: tempData.appId,
-        databaseURL: tempData.databaseURL,
-      }
-    })
+    const secret = JSON.parse(response.SecretString)
+
+    const firebaseConfig = {
+      apiKey: secret.apiKey,
+      authDomain: secret.authDomain,
+      projectId: secret.projectId,
+      storageBucket: secret.storageBucket,
+      messagingSenderId: secret.messagingSenderId,
+      appId: secret.appId,
+      databaseURL: secret.databaseURL,
+    }
+
+    // Initialize Firebase app
+    const app = firebase.initializeApp(firebaseConfig)
+
+    auth = firebase.auth()
+    db = getDatabase(app)
+    // Export necessary Firebase objects
+  } catch (err) {
+    console.error(err)
+  }
 }
 
-firebaseConfig = data()
-console.log(firebaseConfig)
+fetchData()
 
-// Your code goes here
-
-console.log('-----------------')
-console.log(secret.apiKey)
-console.log('-----------------')
-console.log(typeof secret.apiKey)
-console.log('-----------------')
-
-//init firebase app
-const app = firebase.initializeApp(firebaseConfig)
-
-const auth = firebase.auth()
-const db = getDatabase(app)
 export { auth, db }
