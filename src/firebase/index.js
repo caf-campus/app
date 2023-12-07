@@ -31,7 +31,7 @@ const data = async () => {
   }
 }
 
-const secret = JSON.parse(data().SecretString)
+const secret = JSON.parse(await data().SecretString)
 
 // Your code goes here
 
