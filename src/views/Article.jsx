@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { getArticleByID, getUserByID } from '../core'
+import { getArticleByID, getUserByID, updateData } from '../core'
 
 const Article = () => {
   const [article, setArticle] = useState({})
   const [author, setAuthor] = useState({})
+  const [isEditMode, setEditMode] = useState(false)
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search)
@@ -18,13 +19,49 @@ const Article = () => {
     })
   }, [])
 
+  const handleModifyClick = () => {
+    setEditMode(true)
+  }
+
+  const handleSaveClick = async () => {
+    await updateData(`articles/${article.key}`, article)
+    setEditMode(false)
+  }
+
+  const handleInputChange = e => {
+    setArticle({
+      ...article,
+      [e.target.name]: e.target.value,
+    })
+  }
+
   return (
-    <div className="bg-white flex items-center justify-center">
+    <div className="flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-md min-w-[70%] max-w-[70%] m-10">
         <h1 className="text-4xl font-bold mb-4 text-grey-700">
-          {article.titre}
+          {isEditMode ? (
+            <input
+              className="border border-gray-400 p-2 rounded-md w-full dark:bg-white"
+              name="titre"
+              value={article.titre}
+              onChange={handleInputChange}
+            />
+          ) : (
+            article.titre
+          )}
         </h1>
-        <p className="text-gray-600 mb-6 break-words">{article.description}</p>
+        <p className="text-gray-600 mb-6" style={{ wordWrap: 'break-word' }}>
+          {isEditMode ? (
+            <textarea
+              className="border border-gray-400 p-2 rounded-md w-full h-80 dark:bg-white"
+              name="description"
+              value={article.description}
+              onChange={handleInputChange}
+            />
+          ) : (
+            article.description
+          )}
+        </p>
         <div className="prose max-w-none text-gray-800">
           <p>
             <b>
@@ -33,6 +70,11 @@ const Article = () => {
             </b>{' '}
             - <i>{article.date}</i>
           </p>
+          {isEditMode ? (
+            <button onClick={handleSaveClick}>Save</button>
+          ) : (
+            <button onClick={handleModifyClick}>Modify</button>
+          )}
         </div>
       </div>
     </div>
