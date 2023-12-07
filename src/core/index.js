@@ -46,7 +46,7 @@ export const submitLogin = (user, setMessage, navigate) => {
     })
 }
 
-export const UpdateData = async (path, data) => {
+export const updateData = async (path, data) => {
   const reference = ref(db, path)
   return update(reference, data)
 }
