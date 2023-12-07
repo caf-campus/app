@@ -1,6 +1,6 @@
 function Notfound() {
   return (
-    <div className="h-screen w-full flex justify-center items-center">
+    <div className="h-screen bg-white w-full flex justify-center items-center">
       <h1 className="font-bold text-4xl">404</h1>
     </div>
   )
