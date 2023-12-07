@@ -4,7 +4,7 @@ phases:
     commands:
       - npm install
       - echo Fetching Firebase credentials...
-      - CREDENTIALS=$(aws secretsmanager get-secret-value --secret-id prod/cafe-campus)
+      - CREDENTIALS=$(aws secretsmanager get-secret-value --secret-id prod/cafe-campus | jq -r .SecretString)
       - export REACT_APP_FIREBASE_API_KEY=$(echo $CREDENTIALS | jq -r .apiKey)
       - export REACT_APP_FIREBASE_AUTH_DOMAIN=$(echo $CREDENTIALS | jq -r .authDomain)
       - export REACT_APP_FIREBASE_PROJECT_ID=$(echo $CREDENTIALS | jq -r .projectId)
