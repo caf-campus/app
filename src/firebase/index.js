@@ -29,7 +29,7 @@ const data = () => {
       }),
     )
     .then(data => {
-      return data
+      return JSON.parse(data.SecretString)
     })
 }
 
