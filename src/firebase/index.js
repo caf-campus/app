@@ -1,8 +1,6 @@
-// Import the functions you need from the SDKs you need
 import firebase from 'firebase/compat/app'
 import { getDatabase } from 'firebase/database'
-import Credentials from '../../credentials'
-import 'firebase/compat/auth' // TODO: Add SDKs for Firebase products that you want to use
+import 'firebase/compat/auth'
 
 import {
   SecretsManagerClient,
@@ -20,57 +18,39 @@ const client = new SecretsManagerClient({
   region: 'eu-west-3',
 })
 
-let auth
-let db
+const fb = { auth: null, db: null }
 
-const fetchData = async () => {
+const initConfig = firebaseConfig => {
+  const app = firebase.initializeApp(firebaseConfig)
+  fb.auth = firebase.auth()
+  fb.db = getDatabase(app)
+}
+
+const useDevCreds = async () => {
+  await import('../../Credentials.js').then(firebaseConfig =>
+    initConfig(firebaseConfig),
+  )
+}
+
+const useProdCreds = async () => {
   try {
-    const response = await client.send(
-      new GetSecretValueCommand({
-        SecretId: secret_name,
-        VersionStage: 'AWSCURRENT',
-      }),
+    const firebaseConfig = JSON.parse(
+      await client.send(
+        new GetSecretValueCommand({
+          SecretId: secret_name,
+          VersionStage: 'AWSCURRENT',
+        }),
+      ),
     )
-    const secret = JSON.parse(response.SecretString)
-
-    const firebaseConfig = {
-      apiKey: secret.apiKey,
-      authDomain: secret.authDomain,
-      projectId: secret.projectId,
-      storageBucket: secret.storageBucket,
-      messagingSenderId: secret.messagingSenderId,
-      appId: secret.appId,
-      databaseURL: secret.databaseURL,
-    }
-
-    // Initialize Firebase app
-    const app = firebase.initializeApp(firebaseConfig)
-
-    auth = firebase.auth()
-    db = getDatabase(app)
-    // Export necessary Firebase objects
+    initConfig(firebaseConfig)
   } catch (err) {
     console.error(err)
   }
 }
 
-const isProduction = import.meta.env.MODE == 'production' ? true : false
-if (isProduction) {
-  fetchData()
-} else {
-  const firebaseConfig = {
-    apiKey: Credentials.apiKey,
-    authDomain: Credentials.authDomain,
-    projectId: Credentials.projectId,
-    storageBucket: Credentials.storageBucket,
-    messagingSenderId: Credentials.messagingSenderId,
-    appId: Credentials.appId,
-    databaseURL: Credentials.databaseURL,
-  }
-  // Initialize Firebase app
-  const app = firebase.initializeApp(firebaseConfig)
-  auth = firebase.auth()
-  db = getDatabase(app)
-}
+await (async () =>
+  import.meta.env.MODE === 'production'
+    ? await useProdCreds()
+    : await useDevCreds())()
 
-export { auth, db }
+export const { auth, db } = fb
