@@ -29,12 +29,17 @@ const ArticleCreation = () => {
 
   return (
     <div className="h-screen w-full flex flex-col text-black space-y-10 justify-center items-center bgcolor">
-      <h1 className="w-fit text-4xl font-Rollicker">Création Article</h1>
+      <h1 className="w-fit text-4xl font-Rollicker dark:text-white">
+        Création Article
+      </h1>
       <div className="flex w-[30%] flex-col space-y-20">
         <form className="flex flex-col space-y-5" onSubmit={handleSubmit}>
           <div className="flex flex-col space-y-2">
-            <label className="font-Inter font-semibold" htmlFor="titre">
-              Titre de l&aposarticle
+            <label
+              className="font-Inter font-semibold dark:text-white"
+              htmlFor="titre"
+            >
+              Titre de l'article
             </label>
             <input
               id="titre"
@@ -45,7 +50,10 @@ const ArticleCreation = () => {
             />
           </div>
           <div className="flex flex-col space-y-2">
-            <label className="font-Inter font-semibold" htmlFor="description">
+            <label
+              className="font-Inter font-semibold dark:text-white"
+              htmlFor="description"
+            >
               Description de l'article
             </label>
             <textarea

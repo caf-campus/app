@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { ReadData, getUserByID } from '../../core'
+import { Link } from 'react-router-dom'
+import { ReadData, getUserByID, deleteArticle } from '../../core'
 
 const TableArticlesComponent = () => {
   const [articles, setArticles] = useState([])
@@ -33,7 +34,12 @@ const TableArticlesComponent = () => {
 
   return (
     <div className="overflow-x-auto flex-grow pl-6">
-      <p className="font-bold">Articles : {articles.length}</p>
+      <p className="font-bold">
+        Articles : {articles.length}{' '}
+        <Link to="/articlecreation">
+          <button className="btn btn-primary mx-2">Add</button>
+        </Link>
+      </p>
       <table className="mt-2 table table-xs">
         <thead>
           <tr>
@@ -55,6 +61,14 @@ const TableArticlesComponent = () => {
                 {article.description.length > 100
                   ? `${article.description.substring(0, 100)}...`
                   : article.description}
+              </td>
+              <td>
+                <button
+                  className="btn"
+                  onClick={() => deleteArticle(article.id)}
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
