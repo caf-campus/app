@@ -3,6 +3,11 @@
 import firebase from 'firebase/compat/app'
 import { getDatabase } from 'firebase/database'
 import 'firebase/compat/auth' // TODO: Add SDKs for Firebase products that you want to use
+console.log('-----------------')
+console.log(process.env.REACT_APP_FIREBASE_API_KEY)
+console.log('-----------------')
+console.log(typeof process.env.REACT_APP_FIREBASE_API_KEY)
+console.log('-----------------')
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
