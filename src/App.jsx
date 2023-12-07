@@ -7,6 +7,7 @@ import Register from './views/Register.jsx'
 import ArticleCreation from './components/ArticleCreation.jsx'
 import AdminPanel from './components/paneladmin/AdminPanel.jsx'
 import Profile from './views/Profile.jsx'
+import Article from './views/Article.jsx'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/articlecreation" element={<ArticleCreation />} />
             <Route path="/paneladmin" element={<AdminPanel />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/article" element={<Article />} />
             <Route path="*" element={<Notfound />} />
           </Route>
         </Routes>
