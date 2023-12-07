@@ -15,23 +15,21 @@ const client = new SecretsManagerClient({
   region: 'eu-west-3',
 })
 
-let response
-
-const data = async () => {
-  try {
-    response = await client.send(
+const data = () => {
+  return client
+    .send(
       new GetSecretValueCommand({
         SecretId: secret_name,
         VersionStage: 'AWSCURRENT', // VersionStage defaults to AWSCURRENT if unspecified
       }),
     )
-    return response
-  } catch (err) {
-    console.log(err)
-  }
+    .then(data => {
+      return data.json()
+    })
 }
 
-const secret = JSON.parse(await data().SecretString)
+const secret = data()
+console.log(secret)
 
 // Your code goes here
 
