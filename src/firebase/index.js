@@ -46,7 +46,7 @@ const data = () => {
 }
 
 firebaseConfig = data()
-console.log(secret)
+console.log(firebaseConfig)
 
 // Your code goes here
 
