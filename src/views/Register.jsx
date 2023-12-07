@@ -20,11 +20,11 @@ const Register = () => {
         lastname: lastName,
         pseudo: pseudonyme,
         email: mail,
+        isAdmin: false,
         articles: [],
       }
       await CreateNewUser(`users/${user.uid}`, userData)
       navigate('/profile')
-      window.location.reload()
     } catch (error) {
       setMessage(error)
       console.error(error)
@@ -100,9 +100,6 @@ const Register = () => {
               type="password"
             />
           </div>
-          <span className="textcolor font-Inter text-sm underline cursor-pointer">
-            Forgot password ?
-          </span>
           <p className="w-full text-center">{message}</p>
           <div className="w-full flex justify-center items-center">
             <button

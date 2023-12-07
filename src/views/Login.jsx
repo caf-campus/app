@@ -49,9 +49,6 @@ const Login = () => {
               type="password"
             />
           </div>
-          <span className="textcolor font-Inter text-sm underline cursor-pointer">
-            Forgot password ?
-          </span>
           <p className="w-full text-center">{message}</p>
           <div className="w-full flex justify-center items-center">
             <button

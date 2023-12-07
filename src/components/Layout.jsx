@@ -34,7 +34,9 @@ const Layout = () => {
               </div>
               <li className="w-[60%] space-x-5 text-md flex justify-center items-center">
                 <Link to="/">Home</Link>
-                <Link to="/paneladmin">Admin Panel</Link>
+                {userDataState.isAdmin ? (
+                  <Link to="/paneladmin">Admin Panel</Link>
+                ) : null}
               </li>
               <div className="w-[20%] flex justify-end space-x-5">
                 {userDataState ? (

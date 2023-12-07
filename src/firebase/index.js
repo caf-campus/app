@@ -15,7 +15,9 @@ const firebaseConfig = {
 }
 
 //init firebase app
-const app = firebase.initializeApp(firebaseConfig)
+const app = firebase.initializeApp(firebaseConfig, {
+  persistence: firebase.browserLocalPersistence,
+})
 
 const auth = firebase.auth()
 const db = getDatabase(app)

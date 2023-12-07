@@ -7,7 +7,6 @@ import DashboardComponent from './DashboardComponent'
 const AdminPanel = () => {
   // État pour suivre l'onglet actif
   const [activeTab, setActiveTab] = useState('Table Users')
-
   // Fonction pour changer l'onglet actif
   const handleTabClick = tabName => {
     setActiveTab(tabName)
