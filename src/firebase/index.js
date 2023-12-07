@@ -20,7 +20,10 @@ const client = new SecretsManagerClient({
   region: 'eu-west-3',
 })
 
+let firebaseConfig
+
 const data = () => {
+  let tempData = {}
   return client
     .send(
       new GetSecretValueCommand({
@@ -29,11 +32,20 @@ const data = () => {
       }),
     )
     .then(data => {
-      return JSON.parse(data.SecretString)
+      tempData = JSON.parse(data.SecretString)
+      return {
+        apiKey: tempData.apiKey,
+        authDomain: tempData.authDomain,
+        projectId: tempData.projectId,
+        storageBucket: tempData.storageBucket,
+        messagingSenderId: tempData.messagingSenderId,
+        appId: tempData.appId,
+        databaseURL: tempData.databaseURL,
+      }
     })
 }
 
-const secret = data()
+firebaseConfig = data()
 console.log(secret)
 
 // Your code goes here
@@ -43,16 +55,6 @@ console.log(secret.apiKey)
 console.log('-----------------')
 console.log(typeof secret.apiKey)
 console.log('-----------------')
-
-const firebaseConfig = {
-  apiKey: secret.apiKey,
-  authDomain: secret.authDomain,
-  projectId: secret.projectId,
-  storageBucket: secret.storageBucket,
-  messagingSenderId: secret.messagingSenderId,
-  appId: secret.appId,
-  databaseURL: secret.databaseURL,
-}
 
 //init firebase app
 const app = firebase.initializeApp(firebaseConfig)
