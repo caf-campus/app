@@ -17,12 +17,20 @@ const client = new SecretsManagerClient({
 
 let response
 
-response = await client.send(
-  new GetSecretValueCommand({
-    SecretId: secret_name,
-    VersionStage: 'AWSCURRENT', // VersionStage defaults to AWSCURRENT if unspecified
-  }),
-)
+const data = async () => {
+  try {
+    response = await client.send(
+      new GetSecretValueCommand({
+        SecretId: secret_name,
+        VersionStage: 'AWSCURRENT', // VersionStage defaults to AWSCURRENT if unspecified
+      }),
+    )
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+data()
 
 const secret = JSON.parse(response.SecretString)
 
