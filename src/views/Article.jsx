@@ -20,14 +20,12 @@ const Article = () => {
   }, [])
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="bg-white flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-md min-w-[70%] max-w-[70%] m-10">
         <h1 className="text-4xl font-bold mb-4 text-grey-700">
           {article.titre}
         </h1>
-        <p className="text-gray-600 mb-6" style={{ wordWrap: 'break-word' }}>
-          {article.description}
-        </p>
+        <p className="text-gray-600 mb-6 break-words">{article.description}</p>
         <div className="prose max-w-none text-gray-800">
           <p>
             <b>Par {author.pseudo}</b> - <i>{article.date}</i>
