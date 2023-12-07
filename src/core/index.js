@@ -128,3 +128,18 @@ export const getUserByID = async userID => {
     throw error
   }
 }
+
+export const getArticleByID = async articleID => {
+  try {
+    const userRef = ref(db, `articles/${articleID}`)
+    const snapshot = await get(userRef)
+    if (snapshot.exists()) {
+      return snapshot.val()
+    } else {
+      throw new Error('Article not found')
+    }
+  } catch (error) {
+    console.log(error.message)
+    throw error
+  }
+}
