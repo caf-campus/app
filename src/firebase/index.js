@@ -9,7 +9,8 @@ import {
   GetSecretValueCommand,
 } from '@aws-sdk/client-secrets-manager'
 
-const secret_name = 'prod/cafe-campus'
+const secret_name =
+  'arn:aws:secretsmanager:eu-west-3:542935783289:secret:prod/cafe-campus-QvSFJM'
 
 const client = new SecretsManagerClient({
   region: 'eu-west-3',
