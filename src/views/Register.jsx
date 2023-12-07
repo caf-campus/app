@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { auth } from '../firebase'
 import { CreateNewUser } from '../core'
@@ -23,8 +23,14 @@ const Register = () => {
         isAdmin: false,
         articles: [],
       }
-    })
-  })
+      await CreateNewUser(`users/${user.uid}`, userData)
+      navigate('/profile')
+    } catch (error) {
+      setMessage(error)
+      console.error(error)
+    }
+  }
+
   return (
     <>
       <div className="bg-white h-screen w-full flex flex-col text-black space-y-20 justify-center items-center bgcolor">
