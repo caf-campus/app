@@ -149,3 +149,13 @@ export const getArticleByID = async articleID => {
     throw error
   }
 }
+
+export const deleteArticle = async articleID => {
+  try {
+    const articleRef = ref(db, `articles/${articleID}`)
+    await set(articleRef, null)
+  } catch (error) {
+    console.log(error.message)
+    throw error
+  }
+}
