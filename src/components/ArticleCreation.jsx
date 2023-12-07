@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { createArticle } from '../core'
 import { auth } from '../firebase'
@@ -14,22 +14,13 @@ const ArticleCreation = () => {
       titre: titre,
       description: description,
       date:
-        new Date().getDate() +
-        '/' +
-        new Date().getMonth() +
-        '/' +
-        new Date().getFullYear(),
+        new Date().toLocaleDateString('fr-FR') +
+        ' ' +
+        new Date().toLocaleTimeString(),
       auteur: auth.currentUser.uid,
     }
     createArticle(article)
   }
-
-  useEffect(() => {
-    if (!auth.currentUser) {
-      navigate('/login')
-      return
-    }
-  }, [navigate])
 
   const handleSubmit = e => {
     e.preventDefault()
