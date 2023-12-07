@@ -25,14 +25,13 @@ const data = async () => {
         VersionStage: 'AWSCURRENT', // VersionStage defaults to AWSCURRENT if unspecified
       }),
     )
+    return response
   } catch (err) {
     console.log(err)
   }
 }
 
-data()
-
-const secret = JSON.parse(response.SecretString)
+const secret = JSON.parse(data().SecretString)
 
 // Your code goes here
 
