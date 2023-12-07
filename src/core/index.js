@@ -51,36 +51,6 @@ export const UpdateData = async (path, data) => {
   return update(reference, data)
 }
 
-export const deleteData = path => {
-  const reference = ref(db, path)
-  return remove(reference)
-}
-
-export const getArticleByID = async articleID => {
-  try {
-    const articleRef = ref(db, `articles/${articleID}`)
-    const snapshot = await get(articleRef)
-    if (snapshot.exists()) {
-      return snapshot.val()
-    } else {
-      throw new Error('Article not found')
-    }
-  } catch (error) {
-    console.log(error.message)
-    throw error
-  }
-}
-
-export const deleteArticle = async articleID => {
-  try {
-    const articleRef = ref(db, `articles/${articleID}`)
-    await set(articleRef, null)
-  } catch (error) {
-    console.log(error.message)
-    throw error
-  }
-}
-
 export const pushData = (path, data) => {
   return push(ref(db, path), data)
 }
