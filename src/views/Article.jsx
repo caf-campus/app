@@ -7,7 +7,7 @@ const Article = () => {
   const [author, setAuthor] = useState({})
   const [isEditMode, setEditMode] = useState(false)
   const [userDataState, setUserData] = useState('')
-
+  console.log(author)
   const fetchUserData = async () => {
     const userData = await ReadData(`users/${auth.currentUser.uid}`)
     if (userData) {
@@ -78,19 +78,20 @@ const Article = () => {
         </p>
         <div className="prose max-w-none text-gray-800">
           <p>
-            <b>
-              By{' '}
-              {author.pseudo ? author.pseudo || 'Deleted User' : author.pseudo}
-            </b>{' '}
-            - <i>{article.date}</i>
+            <b>By {author ? author.pseudo : 'Deleted User'}</b> -{' '}
+            <i>{article.date}</i>
           </p>
-          {author.pseudo == userDataState.pseudo ? (
+          {author ? (
             <>
-              {isEditMode ? (
-                <button onClick={handleSaveClick}>Save</button>
-              ) : (
-                <button onClick={handleModifyClick}>Modify</button>
-              )}
+              {author.pseudo == userDataState.pseudo ? (
+                <>
+                  {isEditMode ? (
+                    <button onClick={handleSaveClick}>Save</button>
+                  ) : (
+                    <button onClick={handleModifyClick}>Modify</button>
+                  )}
+                </>
+              ) : null}
             </>
           ) : null}
         </div>
