@@ -3,7 +3,6 @@ import { ReadData } from '../../core'
 
 const TableUsersComponent = () => {
   const [users, setUsers] = useState([])
-
   useEffect(() => {
     ReadData('users')
       .then(data => {
@@ -39,6 +38,9 @@ const TableUsersComponent = () => {
               <td>{user.firstname}</td>
               <td>{user.email}</td>
               <td>{user.id}</td>
+              <td>
+                <button className="btn">Delete</button>
+              </td>
             </tr>
           ))}
         </tbody>

@@ -46,7 +46,7 @@ export const submitLogin = (user, setMessage, navigate) => {
     })
 }
 
-export const UpdateData = async (path, data) => {
+export const updateData = async (path, data) => {
   const reference = ref(db, path)
   return update(reference, data)
 }
@@ -76,7 +76,8 @@ export const getUserByID = async userID => {
     if (snapshot.exists()) {
       return snapshot.val()
     } else {
-      throw new Error('User not found')
+      console.log('User not found')
+      return null
     }
   } catch (error) {
     console.log(error.message)
