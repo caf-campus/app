@@ -76,7 +76,8 @@ export const getUserByID = async userID => {
     if (snapshot.exists()) {
       return snapshot.val()
     } else {
-      throw new Error('User not found')
+      console.log('User not found')
+      return null
     }
   } catch (error) {
     console.log(error.message)
@@ -103,6 +104,16 @@ export const deleteArticle = async articleID => {
   try {
     const articleRef = ref(db, `articles/${articleID}`)
     await set(articleRef, null)
+  } catch (error) {
+    console.log(error.message)
+    throw error
+  }
+}
+
+export const deleteUser = async userID => {
+  try {
+    const userRef = ref(db, `users/${userID}`)
+    await set(userRef, null)
   } catch (error) {
     console.log(error.message)
     throw error

@@ -51,7 +51,11 @@ const Home = () => {
                   : article.description}
               </p>
               <p className="text-gray-500 text-sm mt-2">
-                Par {authors[article.auteur].pseudo} - <i>{article.date}</i>
+                Par{' '}
+                {authors[article.auteur]
+                  ? authors[article.auteur].pseudo || 'Deleted User'
+                  : 'Deleted User'}{' '}
+                - <i>{article.date}</i>
               </p>
             </div>
           </Link>

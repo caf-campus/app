@@ -54,7 +54,11 @@ const TableArticlesComponent = () => {
           {articles.map(article => (
             <tr key={article.id}>
               <td>{article.titre}</td>
-              <td>{authors[article.auteur].pseudo}</td>
+              <td>
+                {authors[article.auteur]
+                  ? authors[article.auteur].pseudo || 'Deleted User'
+                  : 'Deleted User'}
+              </td>
               <td>{article.date}</td>
               <td>{article.id}</td>
               <td>
