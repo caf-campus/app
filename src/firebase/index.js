@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import firebase from 'firebase/compat/app'
 import { getDatabase } from 'firebase/database'
 import 'firebase/compat/auth'
@@ -18,18 +19,30 @@ const client = new SecretsManagerClient({
   region: 'eu-west-3',
 })
 
-const fb = { auth: null, db: null }
+let loadedCreds
 
 const initConfig = firebaseConfig => {
   const app = firebase.initializeApp(firebaseConfig)
-  fb.auth = firebase.auth()
-  fb.db = getDatabase(app)
+  const auth = firebase.auth()
+  const db = getDatabase(app)
+  loadedCreds = { auth, db }
 }
 
 const useDevCreds = async () => {
-  await import('../../Credentials.js').then(firebaseConfig =>
-    initConfig(firebaseConfig),
-  )
+  try {
+    const config = import.meta.env
+    initConfig({
+      apiKey: config.VITE_apiKey,
+      appId: config.VITE_appId,
+      authDomain: config.VITE_authDomain,
+      databaseURL: config.VITE_databaseURL,
+      messagingSenderId: config.VITE_messagingSenderId,
+      projectId: config.VITE_projectId,
+      storageBucket: config.VITE_storageBucket,
+    })
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 const useProdCreds = async () => {
@@ -48,9 +61,6 @@ const useProdCreds = async () => {
   }
 }
 
-await (async () =>
-  import.meta.env.MODE === 'production'
-    ? await useProdCreds()
-    : await useDevCreds())()
+import.meta.env.MODE === 'production' ? useProdCreds() : await useDevCreds()
 
-export const { auth, db } = fb
+export const { auth, db } = loadedCreds
