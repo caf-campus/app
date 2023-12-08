@@ -41,6 +41,7 @@ const Layout = () => {
               <div className="w-[20%] flex justify-end space-x-5">
                 {userDataState ? (
                   <>
+                    <Link to="/articlecreation">Create Article</Link>
                     <Link to="/profile">{userDataState.pseudo}</Link>
                     <button onClick={handleLogOut}>Disconnect</button>
                   </>
