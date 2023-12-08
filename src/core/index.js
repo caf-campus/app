@@ -109,13 +109,3 @@ export const deleteArticle = async articleID => {
     throw error
   }
 }
-
-export const deleteUser = async userID => {
-  try {
-    const userRef = ref(db, `users/${userID}`)
-    await set(userRef, null)
-  } catch (error) {
-    console.log(error.message)
-    throw error
-  }
-}

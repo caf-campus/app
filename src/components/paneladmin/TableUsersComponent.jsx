@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
-import { ReadData, deleteUser } from '../../core'
+import { ReadData } from '../../core'
 
 const TableUsersComponent = () => {
   const [users, setUsers] = useState([])
-
   useEffect(() => {
     ReadData('users')
       .then(data => {
@@ -40,15 +39,7 @@ const TableUsersComponent = () => {
               <td>{user.email}</td>
               <td>{user.id}</td>
               <td>
-                <button
-                  className="btn"
-                  onClick={() => {
-                    deleteUser(user.id)
-                    window.location.reload()
-                  }}
-                >
-                  Delete
-                </button>
+                <button className="btn">Delete</button>
               </td>
             </tr>
           ))}

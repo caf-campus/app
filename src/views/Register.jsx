@@ -25,6 +25,7 @@ const Register = () => {
       }
       await CreateNewUser(`users/${user.uid}`, userData)
       navigate('/profile')
+      window.location.reload()
     } catch (error) {
       setMessage(error)
       console.error(error)

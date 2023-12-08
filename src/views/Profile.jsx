@@ -30,7 +30,6 @@ const Profile = () => {
   }
 
   const handleSaveClick = async () => {
-    // Update user data in the database
     await updateData(`users/${auth.currentUser.uid}`, userDataState)
     setEditMode(false)
   }
