@@ -36,10 +36,10 @@ const Home = () => {
       <h1 className="text-4xl bold text-neutral-800">Derniers articles</h1>
       <p>ici ça tchatche</p>
 
-      <div className="h-full mt-8 w-[80%] flex flex-wrap space-x-5">
+      <div className="h-full mt-8 w-[80%] flex flex-wrap">
         {articles.map(article => (
           <Link
-            className="w-[30%] h-[30%]"
+            className="w-[30%] h-[30%] ml-5"
             to={`article?id=${article.id}`}
             key={article.id}
           >

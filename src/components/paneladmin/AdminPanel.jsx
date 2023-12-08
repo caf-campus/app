@@ -25,7 +25,7 @@ const AdminPanel = () => {
   }
 
   return (
-    <div className="flex top-50">
+    <div className="flex top-50 h-[90vh]">
       <ul className="menu bg-base-200 w-1/5">
         <li>
           <a
