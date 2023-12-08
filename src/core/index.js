@@ -46,7 +46,7 @@ export const submitLogin = (user, setMessage, navigate) => {
     })
 }
 
-export const UpdateData = async (path, data) => {
+export const updateData = async (path, data) => {
   const reference = ref(db, path)
   return update(reference, data)
 }
@@ -104,16 +104,6 @@ export const deleteArticle = async articleID => {
   try {
     const articleRef = ref(db, `articles/${articleID}`)
     await set(articleRef, null)
-  } catch (error) {
-    console.log(error.message)
-    throw error
-  }
-}
-
-export const deleteUser = async userID => {
-  try {
-    const userRef = ref(db, `users/${userID}`)
-    await set(userRef, null)
   } catch (error) {
     console.log(error.message)
     throw error

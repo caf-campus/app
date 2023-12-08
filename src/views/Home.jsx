@@ -43,11 +43,11 @@ const Home = () => {
             to={`article?id=${article.id}`}
             key={article.id}
           >
-            <div className="h-full bg-white p-6 mb-4 rounded-md shadow-md border border-gray-300">
+            <div className="bg-white p-6 mb-4 rounded-md shadow-md border border-gray-300">
               <h2 className="text-2xl font-semibold mb-2">{article.titre}</h2>
               <p className="text-gray-700 w-full break-words">
-                {article.description.length > 100
-                  ? `${article.description.substring(0, 100)}...`
+                {article.description.length > 20
+                  ? `${article.description.substring(0, 20)}...`
                   : article.description}
               </p>
               <p className="text-gray-500 text-sm mt-2">
