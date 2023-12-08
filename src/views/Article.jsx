@@ -1,16 +1,28 @@
 import { useEffect, useState } from 'react'
-import { getArticleByID, getUserByID, updateData } from '../core'
+import { ReadData, getArticleByID, getUserByID, updateData } from '../core'
+import { auth } from '../firebase'
 
 const Article = () => {
   const [article, setArticle] = useState({})
   const [author, setAuthor] = useState({})
   const [isEditMode, setEditMode] = useState(false)
+  const [userDataState, setUserData] = useState('')
+
+  const fetchUserData = async () => {
+    const userData = await ReadData(`users/${auth.currentUser.uid}`)
+    if (userData) {
+      setUserData(userData)
+    }
+  }
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search)
-    const id = urlParams.get('id') // Replace 'id' with the name of your parameter
-
-    // Use the ID to fetch article data
+    const id = urlParams.get('id')
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        fetchUserData()
+      }
+    })
     getArticleByID(id).then(article => {
       setArticle(article)
       getUserByID(article.auteur).then(user => {
@@ -72,11 +84,15 @@ const Article = () => {
             </b>{' '}
             - <i>{article.date}</i>
           </p>
-          {isEditMode ? (
-            <button onClick={handleSaveClick}>Save</button>
-          ) : (
-            <button onClick={handleModifyClick}>Modify</button>
-          )}
+          {author.pseudo == userDataState.pseudo ? (
+            <>
+              {isEditMode ? (
+                <button onClick={handleSaveClick}>Save</button>
+              ) : (
+                <button onClick={handleModifyClick}>Modify</button>
+              )}
+            </>
+          ) : null}
         </div>
       </div>
     </div>
